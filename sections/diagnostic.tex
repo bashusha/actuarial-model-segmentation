@@ -1,0 +1,92 @@
+\section{Diagnostic principles and interpretation of results}
+
+The proposed method is not an automatic procedure that mechanically produces a segmentation decision. It is intended as a \textbf{diagnostic tool} that supports, rather than replaces, actuarial professional judgment.
+
+This section formulates principles of interpretation that help distinguish justified structural segmentation from artefacts driven by noise, scale effects, or data limitations.
+
+\subsection{Multi-level diagnostics: avoiding reliance on a single criterion}
+
+Decisions regarding segmentation should be supported by \textbf{multiple consistent signals}. No single diagnostic indicator is sufficient on its own.
+
+\textbf{Key diagnostic signals include:}
+\begin{enumerate}
+    \item \textbf{Energy trajectory} — whether increasing the number of zones yields a structurally meaningful improvement or merely a monotonic decrease without characteristic transitions.
+    \item \textbf{Spatial localisation} — whether zone boundaries concentrate in interpretable regions of the feature space.
+    \item \textbf{Boundary load} — whether identified boundaries carry a substantial share of local conflicts, rather than resulting from random fragmentation.
+    \item \textbf{Improvement of local models} — whether segmentation leads to stable improvements in local data description.
+    \item \textbf{Between- and within-zone variation} — whether differences between zones are substantively meaningful in terms of $F \mid X$.
+\end{enumerate}
+
+Segmentation is considered diagnostically justified only when the majority of these signals point in the same direction. When signals are weak or conflicting, preference should be given to the global model.
+
+\subsection{Comparison with geometric clustering}
+
+A useful reference point is comparison with purely geometric clustering based solely on the structure of the feature space $X$.
+
+\textbf{Typical interpretative scenarios include:}
+\begin{itemize}
+    \item \textbf{Geometry = 1, energy-based diagnosis $> 1$:}  
+    The signal originates from the behaviour of the target variable rather than from feature geometry. This indicates structural conflicts without clear separability in $X$.
+    \item \textbf{Geometry $> 1$, energy-based diagnosis consistent with it:}  
+    Segmentation reflects a natural geometric separation and can be interpreted as structurally meaningful.
+    \item \textbf{Geometry $> 1$, energy-based diagnosis = 1:}  
+    Geometric separation is not supported by the target variable and should not automatically lead to segmentation.
+\end{itemize}
+
+Such comparisons help identify the source of the diagnostic signal and avoid unjustified structural decisions.
+
+\subsection{Temporal stability (when time slices are available)}
+
+When data are available across multiple time slices, the diagnostic procedure can be applied independently to each slice.
+
+Zones that are consistently reproduced over time and exhibit substantial overlap (for example, as measured by the adjusted Rand index) can be interpreted as \textbf{structural}, rather than accidental or transient.
+
+Temporal stability is not a required condition, but serves as an important supplementary confirmation when relevant data are available.
+
+\subsection{Bayesian perspective and the role of uncertainty}
+
+Under the Bayesian interpretation, the energy function corresponds to the negative logarithm of the posterior probability of a structural hypothesis. This allows diagnostic outcomes to be viewed as distributions of uncertainty rather than point decisions.
+
+A \textbf{flat energy trajectory} indicates that the data do not provide sufficient evidence in favour of segmentation. In such cases, preference should be given to the simpler hypothesis ($K = 1$).
+
+A \textbf{sharp transition in energy} suggests concentration of posterior mass and points to the presence of localised structural heterogeneity.
+
+This perspective is particularly valuable under limited data, where explicit treatment of uncertainty reduces the risk of overfitting.
+
+\subsection{When diagnostics return the global model}
+
+The absence of segmentation constitutes a \textbf{valid and informative diagnostic result}.
+
+The method returns $K = 1$ when:
+\begin{itemize}
+    \item the data are structurally homogeneous;
+    \item local conflicts are insufficiently stable or interpretable;
+    \item noise dominates the available signal;
+    \item increased structural complexity is not justified by diagnostic benefit.
+\end{itemize}
+
+In all such cases, retaining the global model represents a correct and professionally defensible decision.
+
+\subsection{Practical recommendations for use}
+
+\textbf{Recommended use cases include:}
+\begin{itemize}
+    \item suspected structural instability of a model;
+    \item significant changes in the business or regulatory environment;
+    \item prior to decisions on portfolio segmentation.
+\end{itemize}
+
+\textbf{Use is not recommended:}
+\begin{itemize}
+    \item as a routine monitoring tool;
+    \item in cases of clear marginal drift without structural analysis;
+    \item under extremely limited data, where diagnostic power is known to be low.
+\end{itemize}
+
+\textbf{Interpretation and communication:}
+\begin{itemize}
+    \item treat results as diagnostic evidence rather than automatic decisions;
+    \item visualise localisation of conflicts and zones;
+    \item relate diagnostic conclusions to business context;
+    \item use the method as a transparent and reproducible way to justify structural decisions to internal and external stakeholders.
+\end{itemize}

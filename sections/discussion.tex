@@ -1,0 +1,90 @@
+\section{Limitations and discussion}
+
+\subsection{Methodological limitations}
+
+The proposed diagnostic approach has several limitations that should be taken into account in practical applications.
+
+\textbf{Data requirements.}
+\begin{itemize}
+    \item The method requires a sufficient number of observations to construct a locality graph and to assess local conditional disagreements. For $n < 500$–$1000$, diagnostic power may be limited.
+    \item Rare regimes with very small numbers of observations may remain undetected.
+    \item The approach assumes that structural conflicts are localised in the feature space. If incompatibility is distributed uniformly, detection becomes more difficult.
+\end{itemize}
+
+\textbf{Choice of metrics and parameters.}
+\begin{itemize}
+    \item The quality of the locality graph is sensitive to the choice of metric in the feature space $X$, particularly for mixed-type data.
+    \item The complexity parameter $\alpha$ does not admit a universal optimal value and requires diagnostic calibration.
+    \item The choice of the number of landmarks and neighbourhood size affects the trade-off between sensitivity and stability.
+\end{itemize}
+
+\textbf{Computational aspects.}
+\begin{itemize}
+    \item The method is intended for offline diagnostics rather than continuous monitoring.
+    \item Computation of rich disagreement measures may be resource-intensive when many candidates are considered.
+    \item The two-phase strategy (screening followed by refinement) reduces computational burden but does not eliminate it entirely.
+\end{itemize}
+
+\textbf{Interpretability.}
+\begin{itemize}
+    \item Diagnostic zones are not required to coincide with natural business segments.
+    \item Zones may have complex shapes in the feature space, requiring additional analytical effort for explanation.
+    \item Transition from diagnostics to operational rules necessarily involves actuarial judgment.
+\end{itemize}
+
+\subsection{Relation to modelling and operational practice}
+
+The proposed diagnostics are intended to complement, rather than replace, the modelling process.
+
+\textbf{Before diagnostics:}  
+the standard model development cycle applies, including data preparation, feature selection, model class choice, and validation.
+
+\textbf{Diagnostics:}  
+applied when structural instability is suspected, addressing the question of whether observed instability reflects incompatibility between local regimes.
+
+\textbf{After diagnostics:}
+\begin{itemize}
+    \item when $K = 1$, sources of instability should be sought in data quality, feature design, modelling assumptions, or business processes;
+    \item when $K > 1$, there is a justified basis to consider structural interventions such as segmentation, feature interactions, or underwriting adjustments.
+\end{itemize}
+
+It is important to emphasise that diagnostically identified zones do not constitute ready-to-use operational solutions. They are defined through the topology of the locality graph and do not have a direct representation in terms of original features.
+
+Practical implementation requires a managerial compromise: approximating complex structural patterns with simple and implementable rules. Examples include:
+\begin{itemize}
+    \item introducing segmentation based on simple logical criteria;
+    \item adding feature interactions within a global model;
+    \item adjusting underwriting policy for a narrowly defined subgroup.
+\end{itemize}
+
+The choice among these options depends on interpretability, operational feasibility, stability, and regulatory constraints.
+
+Crucially, simplification occurs \textbf{at the operationalisation stage}, not at the diagnostic stage. Decisions continue to be grounded in the analysis of local conditional conflicts rather than marginal feature comparisons.
+
+\subsection{Context of limited-data markets}
+
+In markets characterised by limited data and concentrated structure, the proposed approach becomes particularly relevant.
+
+\begin{itemize}
+    \item \textbf{High cost of erroneous decisions:} unjustified segmentation may lead to overfitting, operational complexity, and regulatory risk.
+    \item \textbf{Strategic interactions:} actions by one participant may induce structural shifts in other portfolios without clear signals in marginal distributions.
+    \item \textbf{Regulatory requirements:} the need for transparent justification of structural decisions increases the value of diagnostic evidence.
+    \item \textbf{Bayesian perspective:} explicit treatment of uncertainty and preference for simplicity improve robustness under limited data.
+\end{itemize}
+
+\subsection{Directions for further research}
+
+The present work suggests several directions for future development:
+\begin{itemize}
+    \item more rigorous Bayesian formalisation of posterior distributions over segmentations;
+    \item stability analysis of zones using bootstrap and cross-validation;
+    \item integration of tools from topological data analysis;
+    \item empirical application to real actuarial portfolios;
+    \item development of infrastructure for integrating diagnostics into model governance processes.
+\end{itemize}
+
+\subsection{Discussion summary}
+
+This section has discussed the limitations of the proposed approach and its relationship to actuarial modelling practice. The central conclusion is that the diagnostics are intended to identify and localise structural conflicts, rather than to automate segmentation decisions.
+
+The method narrows the space of plausible structural choices and makes competing hypotheses explicit, while leaving the final decision to actuarial judgment informed by business and regulatory context.

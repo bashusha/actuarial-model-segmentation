@@ -1,0 +1,32 @@
+\section{Motivation: When Standard Diagnostics Fall Short}
+
+\subsection{A typical scenario}
+
+Consider a situation encountered by many practicing actuaries.
+
+A model is regularly refitted on new data. Monitoring indicates relative stability of marginal distributions of the covariates. Business-level metrics—such as the average portfolio prediction or aggregated loss indicators—remain within acceptable ranges. At the same time, \emph{internal model diagnostics} gradually deteriorate: residual variance increases in certain subgroups, coefficient estimates become less stable across refits, and local predictions lose reliability.
+
+Importantly, such situations often lack the standard signals associated with data degradation. There is no clear evidence of data drift: classical indicators such as KS tests or PSI remain within acceptable bounds, although with limited data their statistical power is low and the interpretation of what constitutes a “normal” range relies heavily on expert judgment. There is also no obvious concept drift, as the global relationship between covariates and the response variable appears to be preserved.
+
+Attempts at local model adjustments—adding features, increasing functional flexibility, or strengthening regularisation—fail to produce a lasting effect. The problem does not manifest as an abrupt failure, but rather as a growing form of procedural instability.
+
+\subsection{Common responses and their limitations}
+
+In practice, such situations typically prompt one or more of the following responses:
+
+\begin{enumerate}
+    \item \textbf{Changing the model class}, moving toward more flexible models (for example, from GLMs to ensemble methods) or, conversely, toward more strongly regularised ones.
+    \item \textbf{Hyperparameter tuning}, which often yields short-term improvements but rarely addresses the underlying source of instability.
+    \item \textbf{Expanding the feature space} through interactions or nonlinear transformations of covariates.
+    \item \textbf{Introducing segmentation}, an organisationally and computationally costly decision that is frequently taken reactively in response to deteriorating internal diagnostics.
+\end{enumerate}
+
+The shared limitation of these approaches is that they focus on \emph{adapting the model} rather than on \emph{understanding the source of instability}. Without a diagnostic interpretation, any intervention risks being either excessive or insufficient. In particular, segmentation may be introduced without a clear understanding of whether it reflects genuine structural heterogeneity or merely amplifies noise and marginal effects.
+
+\subsection{Structural incompatibility as a diagnostic hypothesis}
+
+This work proposes an alternative diagnostic perspective. Observed instability may be unrelated to data quality, model class selection, or insufficient expressive power of the model. Instead, it may arise in situations where \emph{local conditional relationships between covariates and the response variable are internally incompatible}.
+
+In other words, different regions of the feature space may be governed by distinct risk-generating mechanisms. Attempting to represent them within a single global model leads to internal conflicts, which manifest as parameter instability, increased local errors, and reduced reproducibility.
+
+In such cases, segmentation is better understood as a \emph{structural hypothesis} rather than as an ad hoc technical intervention. The central task is to develop diagnostic tools that allow this hypothesis to be assessed, distinguishing genuine structural incompatibility from the effects of noise, marginal data support, or transient fluctuations.

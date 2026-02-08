@@ -1,0 +1,113 @@
+\section{Mathematical framework: topology-aware energy-based diagnostics}
+
+\subsection{Problem formulation}
+
+Consider a set of observations $(X_i, F_i)$, where $X_i \in \mathbb{R}^d$ denotes a vector of covariates (possibly of mixed type), $F_i$ is the target variable (loss, frequency, severity, etc.), and $i = 1, \ldots, n$.
+
+A global model assumes that the conditional distribution $F \mid X$ is structurally homogeneous over the entire domain. Segmentation introduces an alternative hypothesis: the data are better described by several local regimes, each characterised by its own conditional relationship.
+
+The objective here is not to optimise segmentation for predictive performance, but to \emph{diagnose} whether the data provide support for the hypothesis of structural heterogeneity.
+
+\subsection{Locality graph and two-component structure}
+
+To perform the diagnostic analysis, we construct a locality graph $G = (V, E)$ over a set of representative points (landmarks). Vertices correspond to representative observations or local aggregates, while edges $E$ encode proximity in the covariate space $X$.
+
+\textbf{Geometric component.}  
+The graph specifies which observations are locally comparable. For mixed-type data, an appropriate distance metric (e.g.\ Gower distance) is used, and edges are constructed via $k$-nearest neighbours or $\varepsilon$-neighbourhoods.
+
+\textbf{Target component.}  
+For each edge $(i,j) \in E$, we define a disagreement weight $w_{ij}$ reflecting differences in the conditional behaviour of $F \mid X$ between vertices $i$ and $j$.
+
+The key distinction from purely geometric clustering is that edges are weighted not only by proximity in $X$, but also by inconsistency in $F \mid X$.
+
+\subsection{Energy functional}
+
+Let a segmentation be defined by an assignment $z = (z_1, \ldots, z_n)$, where $z_i \in \{1, \ldots, K\}$ denotes the zone label for observation $i$. Each zone $k$ is associated with parameters $\phi_k$ describing the local behaviour of $F \mid X$ within that zone (e.g.\ moments, local model parameters, or more general distributional characteristics).
+
+We define the segmentation energy as
+\[
+E(z, \phi) =
+\sum_{i=1}^n \ell_i(\phi_{z_i})
+\;+\;
+\lambda \sum_{(i,j) \in E} w_{ij} \, \mathbb{1}[z_i \neq z_j]
+\;+\;
+\alpha K ,
+\]
+where:
+\begin{itemize}
+    \item \textbf{The first term} (data term) measures the compatibility of observation $i$ with zone $z_i$, for example via negative log-likelihood or squared deviation;
+    \item \textbf{The second term} (boundary penalty) penalises cutting edges with high disagreement weights $w_{ij}$; stronger local disagreement implies a lower penalty for separating neighbouring vertices;
+    \item \textbf{The third term} (complexity penalty) penalises the number of zones and discourages excessive fragmentation.
+\end{itemize}
+
+\subsection{Dual interpretation}
+
+The proposed functional admits two complementary interpretations.
+
+\textbf{Frequentist interpretation.}  
+The energy corresponds to a regularised risk functional. Introducing segmentation reduces structural disagreement (through the first and second terms) at the cost of increased complexity (the third term). The balance is controlled by the parameter $\alpha$.
+
+\textbf{Bayesian interpretation.}  
+The same energy can be understood as proportional to the negative log-posterior probability of a structural hypothesis:
+\[
+E(z, \phi) \propto - \log p(z, \phi \mid \text{data}),
+\]
+where the complexity term plays the role of a prior penalising complex structures (implicitly related to priors such as a Dirichlet process or a Chinese Restaurant Process with low concentration). This interpretation is particularly natural under limited data, where posterior mass concentrates on simpler hypotheses until sufficiently strong local evidence in favour of segmentation emerges.
+
+Importantly, both interpretations lead to the same computational procedure, while providing different conceptual frameworks for understanding the results.
+
+\subsection{Disagreement weights}
+
+Diagnostic performance depends critically on the choice of disagreement weights $w_{ij}$. Ideally, $w_{ij}$ should reflect rich distributional discrepancies between local conditional distributions $F \mid X$ in the neighbourhoods of $i$ and $j$. However, computing such measures for all pairs may be computationally expensive.
+
+We therefore adopt a two-phase strategy.
+
+\textbf{Phase A (screening).}  
+Simplified surrogate measures $\tilde{w}_{ij}$ are computed based on differences in moments, residuals, or simple predictive contrasts. These measures are inexpensive and are used for initial candidate identification. False positives are acceptable at this stage and are filtered out later.
+
+\textbf{Phase B (refinement).}  
+For a restricted set of candidates, disagreement weights $w_{ij}$ are recomputed using richer measures such as energy distance, Hellinger distance between local mixtures, or posterior predictive divergence in Bayesian models.
+
+\subsection{Algorithmic procedure}
+
+The algorithm follows an agglomerative strategy:
+\begin{enumerate}
+    \item Select a set of landmark points $L \subset \{1, \ldots, n\}$ with $|L| = m$;
+    \item Construct a locality graph $G$ over $L$ (e.g.\ $k$-NN);
+    \item Compute surrogate weights $\tilde{w}_{ij}$ for all edges;
+    \item Initialise with $K = m$ (each landmark forms its own zone);
+    \item Iteratively merge zones by minimising the surrogate energy $\tilde{E}(z)$;
+    \item Record the full energy trajectory $E(K)$ for $K = m, m-1, \ldots, 1$;
+    \item Identify candidates based on the trajectory (elbows, plateaus);
+    \item Recompute refined energies using $w_{ij}$ for the candidates;
+    \item Select the final segmentation or return the global model ($K=1$).
+\end{enumerate}
+
+Crucially, if none of the candidates exhibits a stable and interpretable improvement over $K=1$, the algorithm \emph{explicitly returns the non-segmented solution}. This outcome represents a valid diagnostic conclusion rather than a failure of the method.
+
+\subsection{Role of the complexity parameter $\alpha$}
+
+The parameter $\alpha$ plays a role analogous to complexity penalties in classical model selection criteria (AIC, BIC). No universal optimal value exists.
+
+Instead, we recommend:
+\begin{itemize}
+    \item exploring a small range of $\alpha$ values;
+    \item analysing energy trajectories and solution stability;
+    \item using $\alpha$ as a diagnostic sensitivity parameter.
+\end{itemize}
+
+Small values of $\alpha$ increase sensitivity to local conflicts (potentially detecting weak signals at the cost of noise), while larger values favour conservative solutions and tend to preserve the global model.
+
+\subsection{Relation to existing approaches}
+
+\textbf{Compared to drift detection.}  
+Standard drift detection methods (KS tests, PSI, residual monitoring) operate on marginal or low-dimensional projections and do not assess structural coherence of local conditional relationships.
+
+\textbf{Compared to geometric clustering.}  
+Methods such as spectral clustering partition data based on the geometry of $X$, ignoring the behaviour of $F \mid X$. The proposed approach integrates both components: geometry determines where comparisons are made, while the target variable determines what is compared.
+
+\textbf{Compared to mixture models.}  
+Mixture and regime-switching models assume latent structure and optimise parameters for prediction. Here, no structure is assumed a priori; instead, the presence or absence of structure is diagnosed.
+
+\textbf{Compared to manifold intersection detection.}  
+Approaches based on geometric signals (e.g.\ local tangent spaces or curvature, such as Deutsch \& Medioni, 2015) are effective under clean data and strong geometric structure. The proposed method is designed for low signal-to-noise settings with weak geometric cues, combining topology with target-based disagreement.

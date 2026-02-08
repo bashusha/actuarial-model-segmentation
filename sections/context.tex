@@ -1,0 +1,45 @@
+\section{Application Context: Concentrated Markets with Limited Data}
+
+The proposed approach is applicable to a broad class of actuarial problems in which the structural adequacy of a global model is in question. In this paper, we focus on the context of concentrated markets with limited data---not because this is the only or primary domain of application, but because under such conditions the limitations of standard diagnostic tools tend to become most apparent, and the cost of incorrect structural decisions is particularly high.
+
+We outline below the key characteristics of markets that call for increased attention to structural diagnostics.
+
+\subsection{Market characteristics requiring structural diagnostics}
+
+The proposed approach is especially relevant for markets exhibiting the following properties.
+
+\textbf{Participant concentration.}  
+The market is dominated by a small number of large players (typically two to five). Strategic decisions made by one participant directly affect the portfolio composition of others. Behavioural spillover effects may induce structural changes in the data without producing clear global signals of model degradation.
+
+\textbf{Limited historical data.}  
+The volume of available observations is often insufficient for reliable drift detection using standard methods. Low statistical power makes stability assessments conditional and heavily dependent on expert judgement. Under such circumstances, Bayesian or diagnostic approaches are frequently more informative than purely frequentist tests.
+
+\textbf{Regulatory and resource constraints.}  
+Models are subject to requirements of transparency and interpretability. Computational resources for frequent retraining of complex models are limited. In addition, structural decisions---including segmentation---must be justified and explained to regulators and internal stakeholders.
+
+\textbf{Dynamic market structure.}  
+Markets may undergo rapid changes in competitive conditions, product offerings, distribution channels, or regulatory frameworks. These processes can generate local structural effects that remain invisible to aggregated performance metrics.
+
+\subsection{Why standard diagnostics may be insufficient}
+
+Under the conditions described above, standard diagnostic tools often fail to detect structural problems in a timely and reliable manner.
+
+Methods for detecting marginal drift typically have low statistical power and may miss relevant structural changes. Frequent model retraining is computationally costly and may obscure, rather than resolve, the underlying issue. Increasing model complexity---either by expanding the feature space or by moving to more flexible model classes---raises the risk of overfitting when data are limited. Finally, segmentation introduced in an ad hoc manner increases operational burden without guaranteeing improved model stability.
+
+In such settings, there is a need for a diagnostic tool that:
+\begin{itemize}
+    \item remains applicable under limited data;
+    \item is used in a targeted, hypothesis-driven manner rather than as part of continuous monitoring;
+    \item produces interpretable results that can be justified to regulators and business stakeholders;
+    \item allows segmentation to be explicitly rejected when insufficiently supported by the data.
+\end{itemize}
+
+\subsection{Illustrative example: strategic interactions in a concentrated market}
+
+Consider a simplified but realistic scenario. In an automobile insurance market, three major players---A, B, and C---operate. Company~A makes a strategic decision to adjust its underwriting policy for a particular group of policyholders, for instance by tightening conditions for young drivers in urban areas.
+
+As a result, some of A's clients migrate to competitors B and~C. The portfolios of these companies receive an inflow of policyholders with a different risk profile. Conditional relationships between features (such as age and location) and loss experience within the portfolios of B and~C change accordingly. Structural heterogeneity emerges: ``legacy'' policyholders exhibit different behaviour compared to those recently acquired from a competitor.
+
+From a diagnostic perspective, marginal feature distributions may change only slightly: the age and geographic composition of the portfolios remain broadly comparable. Global model performance metrics may also stay within acceptable ranges. Locally, however, persistent conflicts arise: a model trained predominantly on legacy policyholders performs systematically worse for newly acquired ones.
+
+Standard diagnostics may fail to flag this issue, as they are not designed to assess local structural coherence. The proposed diagnostic approach makes it possible to detect such local conflicts and to assess the plausibility of segmentation hypotheses---for example, by time of acquisition or by proxy variables reflecting portfolio origin.

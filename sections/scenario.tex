@@ -1,0 +1,89 @@
+\section{Synthetic scenario: a diagnostic illustration of strategic interactions}
+
+This section is illustrative in nature. Its purpose is not to demonstrate empirical results, but to clarify the types of structural situations the proposed diagnostic approach is designed to detect, and how its conclusions should be interpreted in actuarial practice under limited observability.
+
+\subsection{Scenario setup}
+
+We consider a stylised scenario reflecting a type of strategic interaction commonly encountered in concentrated insurance markets. Suppose that three large players (A, B, and C) operate in an automobile insurance market, each with a relatively stable portfolio of policyholders.
+
+For all companies, loss experience depends on standard actuarial covariates such as driver age, city type (large versus small), and driving experience. Within each portfolio, a company-specific conditional relationship between covariates and loss outcomes is present, reflecting differences in underwriting policies and client composition.
+
+At time $t = 0$, company A makes a strategic decision to tighten conditions for young drivers in large cities, for example through pricing or underwriting restrictions.
+
+\textbf{Conceptual consequences of this decision include:}
+\begin{itemize}
+    \item a portion of company A’s clients from the affected region of the feature space migrates to competitors B and C;
+    \item the portfolios of B and C receive an inflow of clients with a different conditional risk profile;
+    \item within the portfolios of B and C, potential structural heterogeneity emerges, as policyholders governed by different conditional relationships $F \mid X$ coexist.
+\end{itemize}
+
+\subsection{Remark on the actuary's perspective}
+
+It is important to emphasise that, in practical settings, an actuary typically observes \textbf{only their own portfolio}, rather than the market as a whole.
+
+Companies A, B, and C are introduced in this scenario not as objects of joint analysis, but as a \textbf{conceptual device} for describing a mechanism through which structural heterogeneity may arise.
+
+From the perspective of an actuary at company B or C:
+\begin{itemize}
+    \item company A is not directly observable;
+    \item client inflows are perceived as endogenous changes in the portfolio;
+    \item information about client origin is either unavailable or only indirectly accessible.
+\end{itemize}
+
+Accordingly, the diagnostic question can be formulated as follows:
+\begin{quote}
+Can signs of structural inadequacy of a global model be detected using only internal portfolio data?
+\end{quote}
+
+The proposed diagnostic approach is designed precisely with this question in mind.
+
+\subsection{Diagnostic formulation}
+
+Suppose that the actuary at company B or C observes the following:
+\begin{itemize}
+    \item marginal distributions of covariates change only slightly;
+    \item global model quality metrics remain within acceptable ranges;
+    \item locally, however, the model exhibits instability or systematic errors within a restricted region of the feature space.
+\end{itemize}
+
+In such a situation, standard diagnostic tools may fail to provide a clear signal. This creates a need for a method that analyses not marginal stability, but \textbf{local conditional coherence}.
+
+\subsection{Expected diagnostic behaviour}
+
+Within the described scenario, the following diagnostic expectations can be formulated.
+
+\textbf{Control case (structurally homogeneous portfolio).}  
+If the portfolio is structurally homogeneous, the diagnostic procedure should support the global hypothesis:
+\begin{itemize}
+    \item the energy trajectory decreases smoothly;
+    \item no stable localisation of graph cuts is observed;
+    \item the preferred solution corresponds to $K = 1$.
+\end{itemize}
+
+\textbf{Scenario with local structural heterogeneity.}  
+If the portfolio contains a limited region of the feature space in which the conditional relationship $F \mid X$ differs from the rest of the portfolio, the diagnostic procedure should:
+\begin{itemize}
+    \item reveal a stable improvement for $K > 1$;
+    \item localise graph cuts in an interpretable region of $X$;
+    \item demonstrate that segmentation explains local conflicts rather than noise.
+\end{itemize}
+
+A key point is that the diagnostic signal emerges \textbf{locally}, without requiring a global deterioration of model-level metrics.
+
+\subsection{Interpretation of diagnostic conclusions}
+
+The proposed scenario illustrates the distinction between two notions of stability:
+\begin{itemize}
+    \item \textbf{marginal stability} (covariate distributions, aggregated metrics);
+    \item \textbf{structural stability} (coherence of local conditional relationships).
+\end{itemize}
+
+In actuarial practice, this distinction is essential. The method allows diagnostic conclusions to be formulated in terms of structural hypotheses:
+\begin{itemize}
+    \item either the global model remains adequate and segmentation is not warranted;
+    \item or local regimes exist for which the global model is internally incompatible.
+\end{itemize}
+
+Both outcomes represent valid diagnostic results.
+
+Thus, the synthetic scenario should be understood not as empirical evidence, but as a \textbf{conceptual map} illustrating the types of structural problems the proposed diagnostic approach is capable of revealing, and how its conclusions should be interpreted under conditions of limited data and partial market observability.

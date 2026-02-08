@@ -1,0 +1,15 @@
+\section{Introduction: Segmentation as an Actuarial Decision}
+
+Portfolio segmentation is widely used in actuarial practice as a way to account for portfolio heterogeneity and improve forecast accuracy. In applied contexts, it is commonly considered as a natural response when the quality or stability of a global model deteriorates: if a model appears not to hold uniformly across the portfolio, segmentation is often considered as a potential remedy.
+
+In this work, segmentation refers specifically to the practice of splitting a portfolio dataset into distinct subsets and building separate models for each subset. This notion is distinct from incorporating segment indicators as features within a single model, from mixture modelling approaches, or from changing the model class to increase expressiveness. The diagnostic framework proposed here addresses the question of whether such dataset splitting is structurally justified.
+
+Segmentation, however, is far from a neutral operation. It increases model complexity, heightens sensitivity to noise in the data, complicates maintenance and interpretation, and may have direct regulatory and social consequences. In many practical actuarial settings, data are limited, fragmented, or only weakly informative at a local level. Under such conditions, unwarranted segmentation can lead to overfitting, unstable premiums, operational complexity, and difficulties in regulatory justification.
+
+From the perspective of actuarial risk management, the key question is therefore less about how to segment a model, and more about when segmentation is truly justified. Observed model instability may arise for various reasons, including noise, scale effects, temporal fluctuations, or insufficient information, and not all such cases reflect the presence of persistent structural heterogeneity.
+
+In this work, we treat segmentation primarily as a diagnostic hypothesis about the structural organization of the data, rather than as a technical optimisation procedure. Introducing segmentation is interpreted as a claim that a single global model is fundamentally incapable of adequately describing the data and that the observed instability has a structural character. Accordingly, the actuary’s task is to test this hypothesis, rather than to automatically increase model complexity.
+
+We propose a diagnostic approach aimed at identifying and interpreting evidence for or against the structural incompatibility of a global model. The approach is oriented toward practical conditions in which data, computational capacity, and operational resources are finite. Particular attention is paid to situations in which the absence of convincing diagnostic signals in favour of segmentation should be regarded as a correct and informative result.
+
+The proposed framework is designed to support the actuary’s professional judgement in making decisions about model structure, reducing model risk, and ensuring the stability and interpretability of actuarial models, rather than to replace existing segmentation methods.

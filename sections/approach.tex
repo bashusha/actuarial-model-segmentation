@@ -1,0 +1,54 @@
+\section{Approach: Diagnosing Local Conditional Conflicts}
+
+The proposed approach is based on a shift in diagnostic focus from global measures of model fit toward the analysis of local conditional behaviour. Rather than relying on aggregated performance metrics, we examine the coherence of local explanations in the feature space and seek persistent conflicts that cannot be attributed to noise or smooth variation.
+
+\subsection{From global fit to local coherence}
+
+Standard model assessment typically relies on global metrics such as deviance, AIC, or out-of-sample performance. While these measures are informative, they aggregate information across the entire portfolio and may obscure local structural issues.
+
+We propose to focus instead on \emph{local conditional behaviour}: how does the response variable behave in small neighbourhoods of the feature space? Are local explanations mutually coherent, or do systematic conflicts arise between them?
+
+The key idea is the following. If a model is structurally adequate, local conditional distributions should vary smoothly and remain mutually consistent. If, however, the data contain incompatible local regimes, this incompatibility manifests itself as persistent conflicts between neighbouring regions of the feature space.
+
+\subsection{What constitutes a local conflict?}
+
+Consider two observations, or two local aggregates, that are close in the feature space~$X$. If the conditional behaviour of the response variable~$F \mid X$ differs substantially between them, this provides evidence of a local conflict.
+
+It is important to emphasise that not every difference constitutes a conflict. Observed differences may be:
+\begin{itemize}
+    \item \textbf{Noise-driven}, reflecting random fluctuations without structural significance;
+    \item \textbf{Smooth}, corresponding to gradual changes that can be captured within a single global model;
+    \item \textbf{Structural}, exhibiting sharp and persistent discrepancies indicative of incompatible local mechanisms.
+\end{itemize}
+
+The purpose of the diagnostic procedure is to distinguish structural conflicts from noise-driven and smooth effects.
+
+\subsection{A two-component diagnostic structure}
+
+The proposed approach separates the diagnostic task into two conceptually distinct yet interrelated components.
+
+The \textbf{geometric component} determines which observations can be meaningfully compared:
+\begin{itemize}
+    \item a locality graph is constructed over the feature space~$X$;
+    \item edges connect observations that are close in~$X$;
+    \item this defines a topological structure on which local comparisons are performed.
+\end{itemize}
+
+The \textbf{response component} determines what is being compared:
+\begin{itemize}
+    \item for each edge in the graph, a measure of disagreement in the conditional behaviour of~$F \mid X$ is computed;
+    \item disagreements may be quantified through differences in residuals, local predictions, moments, or more general distributional characteristics;
+    \item large disagreements between neighbouring observations indicate the presence of local conflicts.
+\end{itemize}
+
+Taken together, these components produce a diagnostic picture of where conflicts concentrate in the feature space, how persistent they are, and whether they are likely to be structural in nature.
+
+\subsection{Segmentation as a diagnostic hypothesis}
+
+Within this perspective, segmentation is understood primarily as a means of assessing a hypothesis about the structural organisation of the data.
+
+\textbf{Hypothesis $H_0$ (global model):} the data are structurally homogeneous, and a single model provides an adequate description of the entire portfolio.
+
+\textbf{Hypothesis $H_1$ (segmented model):} the data contain incompatible local regimes that call for structural separation.
+
+The task of diagnostics is to evaluate which of these hypotheses is better supported by the data. Crucially, the absence of sufficient evidence in favour of segmentation should be regarded as a valid and informative diagnostic outcome, rather than as a limitation of the approach.

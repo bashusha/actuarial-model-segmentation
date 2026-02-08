@@ -1,0 +1,13 @@
+\begin{abstract}
+In many actuarial applications, portfolio segmentation is commonly considered as a means of improving predictive accuracy. However, under conditions of limited data, strong regulatory scrutiny, and significant social consequences of pricing decisions, segmentation itself becomes a source of model risk. Unwarranted segmentation may lead to overfitting, operational complexity, and difficulties in regulatory justification.
+
+In this paper, segmentation is treated not as a modelling technique, but as a diagnostic hypothesis about the structural incompatibility of a global model. We propose a diagnostic framework that allows the actuary to assess whether observed model instability is supported by the data, or whether it can be more plausibly explained by noise, scale effects, or insufficient information. The approach is based on combining geometric locality in the feature space with measures of local disagreement in the conditional response distribution. A graph-based representation of local neighborhoods is used to detect conflicts between neighboring regimes, and an energy functional provides a principled way to evaluate competing structural hypotheses.
+
+The framework admits both frequentist and Bayesian interpretations. In particular, the Bayesian perspective highlights posterior uncertainty over the number of segments and naturally enforces a preference for simpler structures when data are weak. Flat energy trajectories indicate high uncertainty and support retaining a single global model, while sharp transitions provide evidence of structural heterogeneity. Importantly, the absence of segmentation is treated as a valid and informative diagnostic outcome.
+
+The proposed methodology is designed for practical actuarial settings with limited data and constrained computational resources. The framework emphasizes interpretability, transparency, and conservative decision-making, aligning naturally with regulatory requirements and public-interest considerations. A synthetic example inspired by strategic interactions in concentrated insurance markets illustrates how local structural conflicts may arise without pronounced changes in marginal distributions, and how the diagnostic distinguishes such cases from spurious signals.
+
+Rather than optimizing segmentation for predictive performance, the proposed approach supports responsible control of model complexity by diagnosing when segmentation is structurally justified.
+\end{abstract}
+
+\noindent\textbf{Keywords:} Actuarial modelling, Portfolio segmentation, Model diagnostics, Structural heterogeneity, Limited data settings, Bayesian interpretation, Regulatory transparency
