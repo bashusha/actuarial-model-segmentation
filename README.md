@@ -1,4 +1,4 @@
-# When Is Segmentation Needed in Actuarial Models?
+# Diagnosing Structural Incompatibility in Actuarial Models
 
 This repository contains the LaTeX sources and PDF of the paper
 
